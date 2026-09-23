@@ -2,8 +2,10 @@
 import Image from "next/image";
 import { motion } from "motion/react";
 import { ArrowRight, Download, Github, Linkedin } from "lucide-react";
-import { assets, links, stats } from "../../../assets/assets";
+import { assets, links } from "../../../assets/assets";
 import HeroVisual from "./HeroVisual";
+import StatTiles from "./StatTiles";
+import useGithubStats from "../hooks/useGithubStats";
 
 const fade = (delay = 0) => ({
   initial: { opacity: 0, y: 16 },
@@ -12,6 +14,9 @@ const fade = (delay = 0) => ({
 });
 
 const Header = () => {
+  const { values, live } = useGithubStats();
+  const commitsLabel = `${values.commits.toLocaleString("en-IN")}${live.commits ? "" : "+"}`;
+
   return (
     <section className="relative overflow-hidden pt-32 pb-20 sm:pt-40 sm:pb-28">
       {/* background glow */}
@@ -47,7 +52,7 @@ const Header = () => {
           <motion.p {...fade(0.3)} className="mt-6 max-w-xl text-base sm:text-lg text-zinc-600 dark:text-zinc-400 leading-relaxed">
             LangGraph orchestration, catalog-constrained structured outputs, RAG, and the evaluation
             harness that keeps them honest. Top contributor to a multi-bot Python/FastAPI platform
-            with 1,400+ commits in 11 months.
+            with {commitsLabel} commits in {values.months} months.
           </motion.p>
 
           <motion.div {...fade(0.4)} className="mt-8 flex flex-wrap items-center gap-3">
@@ -85,20 +90,17 @@ const Header = () => {
         </motion.div>
       </div>
 
-      {/* stats */}
-      <motion.div
-        {...fade(0.55)}
-        className="max-w-6xl mx-auto px-4 sm:px-8 mt-16 sm:mt-24 grid grid-cols-2 lg:grid-cols-4 gap-px rounded-2xl overflow-hidden border border-zinc-200 dark:border-white/10 bg-zinc-200 dark:bg-white/10"
-      >
-        {stats.map((s) => (
-          <div key={s.label} className="bg-white dark:bg-[#0f0a19] p-5 sm:p-6">
-            <div className="text-2xl sm:text-3xl font-semibold tracking-tight bg-gradient-to-r from-violet-600 to-fuchsia-500 bg-clip-text text-transparent">
-              {s.value}
-            </div>
-            <div className="mt-1 text-xs sm:text-sm text-zinc-500 dark:text-zinc-400">{s.label}</div>
-          </div>
-        ))}
-      </motion.div>
+      {/* live stats */}
+      <div className="max-w-6xl mx-auto px-4 sm:px-8 mt-16 sm:mt-24">
+        <motion.div {...fade(0.5)} className="flex items-center gap-3 mb-5">
+          <span className="text-xs font-semibold tracking-[0.2em] uppercase text-zinc-500 dark:text-zinc-400">
+            By the numbers
+          </span>
+          <span className="h-px flex-1 bg-zinc-200 dark:bg-white/10" />
+          <span className="text-[11px] text-zinc-400">green dot = pulled live from GitHub</span>
+        </motion.div>
+        <StatTiles />
+      </div>
 
       <style jsx global>{`
         .animate-wave { animation: wave 1.8s infinite; transform-origin: 70% 70%; }

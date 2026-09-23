@@ -46,12 +46,17 @@ export const navLinks = [
   { label: "Contact", href: "#contact" },
 ];
 
-export const stats = [
-  { value: "1,400+", label: "commits shipped in 11 months" },
-  { value: "90+", label: "intent handlers behind one agent" },
-  { value: "18×51×63", label: "entity × operation × sub-op taxonomy" },
-  { value: "7", label: "OpenAI model families routed by cost" },
-];
+// first commit at Mulltiply; drives the "N months" copy
+export const careerStart = "2025-11-20";
+// shown until /api/github-stats returns live numbers
+export const fallbackStats = {
+  commits: 1400,
+  sharePct: 80,
+  linesAdded: 130000,
+  activeWeeks: 37,
+  totalWeeks: 45,
+  leetcode: 100,
+};
 
 export const experience = [
   {
