@@ -1,96 +1,67 @@
-import React from "react";
+"use client";
 import Image from "next/image";
-import { assets, infoList, toolsData } from "../../../assets/assets";
-import { motion } from "motion/react"
+import { motion } from "motion/react";
+import { Briefcase, GraduationCap, Sparkles } from "lucide-react";
+import { assets, infoList } from "../../../assets/assets";
+import SectionHeading from "./SectionHeading";
 
-const About = ({isDarkMode}) => {
+const icons = [Briefcase, GraduationCap, Sparkles];
+
+const About = () => {
   return (
-    <motion.div
-    initial={{opacity:0}}
-    whileInView={{opacity:1}}
-    transition={{duration:1}}
-    id="about" className="w-full px-4 sm:px-12 py-10 scroll-mt-20">
-      <motion.h4 
-      initial={{ y:-20,opacity:0 }}
-      whileInView={{y:0,opacity:1}}
-      transition={{duration:0.5,delay:0.3}}
-      className="text-center mb-2 text-lg ovo-font">Introduction</motion.h4>
-      <motion.h2 
-      initial={{ y:-20,opacity:0 }}
-      whileInView={{y:0,opacity:1}}
-      transition={{duration:0.5,delay:0.5}}
-       className="text-center text-5xl ovo-font">About me</motion.h2>
-      <motion.div
-      initial={{opacity:0 }}
-      whileInView={{opacity:1}}
-      transition={{duration:0.8}}
-      
-      className="flex w-full flex-col lg:flex-row items-center gap-20 my-20">
-        <motion.div 
-        initial={{opacity:0, scale:0.9 }}
-      whileInView={{opacity:1,scale:1}}
-      transition={{duration:0.6}}
-        className="w-64 sm:w-80 rounded-3xl max-w-none">
-          <Image
-            src={assets.user_image}
-            alt="user"
-            className="w-full rounded-3xl"
-          />
+    <section id="about" className="max-w-6xl mx-auto px-4 sm:px-8 py-20 sm:py-28 scroll-mt-20">
+      <SectionHeading eyebrow="Introduction" title="About me" />
+
+      <div className="grid lg:grid-cols-[minmax(0,320px)_1fr] gap-12 lg:gap-20 items-center">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="relative w-64 sm:w-80 mx-auto"
+        >
+          <div className="absolute -inset-2 rounded-3xl bg-gradient-to-br from-violet-500/40 to-pink-400/30 blur-lg" />
+          <Image src={assets.user_image} alt="Altamash Khan" className="relative w-full rounded-3xl object-cover shadow-xl" />
         </motion.div>
-        <motion.div 
-        initial={{opacity:0 }}
-      whileInView={{opacity:1}}
-      transition={{duration:0.6,delay:0.8}}
-        className="flex-1">
-          <p className="mb-10 max-w-2xl ovo-font"> 
-            I specialize in building responsive, user-focused web applications
-            using the MERN stack. From e-commerce platforms and news portals to
-            AI-powered bots and creative web apps, I love turning ideas into
-            impactful digital experiences. With hands-on experience in both
-            freelance and academic projects, I'm constantly exploring new
-            technologies like AI, ML, and data-driven development to stay ahead
-            in the tech world.
+
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.15 }}
+        >
+          <p className="text-base sm:text-lg text-zinc-700 dark:text-zinc-300 leading-relaxed">
+            I&apos;m an AI engineer who ships LLM agents end to end: from the LangGraph state machine and
+            the structured-output schemas that keep it grounded, to the Redis locks that make concurrent
+            chats safe and the evaluation harness that catches regressions before buyers do.
           </p>
-          <motion.ul
-          initial={{opacity:0 }}
-      whileInView={{opacity:1}}
-      transition={{duration:0.8,delay:1}}
-          
-          className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-2xl">
-            {infoList.map(({icon,iconDark,title,description},index)=>(
+          <p className="mt-4 text-base sm:text-lg text-zinc-700 dark:text-zinc-300 leading-relaxed">
+            At Mulltiply I own the intent classifier, product parser, cart engine and B2C bot for a
+            WhatsApp commerce platform used by FMCG distributors and D2C brands across India. I&apos;m
+            comfortable anywhere from an OpenAI schema limit to a Lua script.
+          </p>
+
+          <ul className="mt-8 grid sm:grid-cols-3 gap-4">
+            {infoList.map(({ title, description }, i) => {
+              const Icon = icons[i];
+              return (
                 <motion.li
-                whileHover={{scale:1.05}}
-                className="border-[0.5px] border-gray-400 rounded-xl p-6 cursor-pointer hover:bg-[#fcf4ff] hover:-translate-y-1 hover:scale-105 transition-transform duration-300 hover:shadow-[0_4px_4px_rgba(0,0,0,0.3)] dark:border-white dark:hover:shadow-white/10 dark:hover:bg-[#2a004a]/50" key={index}>
-                    <Image src={isDarkMode?iconDark: icon} alt={title} className="w-7 mt-3"/>
-                    <h3 className="my-4 font-semibold text-gray-700 dark:text-white">{title}</h3>
-                    <p className="text-gray-600 text-sm dark:text-white/80">{description}</p>
+                  key={title}
+                  whileHover={{ y: -4 }}
+                  className="rounded-2xl border border-zinc-200 dark:border-white/10 bg-white dark:bg-white/[0.03] p-5 hover:shadow-lg hover:shadow-violet-500/10 transition-shadow"
+                >
+                  <span className="inline-flex w-9 h-9 items-center justify-center rounded-xl bg-violet-100 dark:bg-violet-500/15 text-violet-600 dark:text-violet-300">
+                    <Icon size={18} />
+                  </span>
+                  <h3 className="mt-4 font-semibold">{title}</h3>
+                  <p className="mt-1.5 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">{description}</p>
                 </motion.li>
-            ))}
-          </motion.ul>
-          
-          <motion.h4 
-          initial={{ y:20,opacity:0 }}
-      whileInView={{y:0,opacity:1}}
-      transition={{duration:1.3,delay:0.5}}
-          className="my-6 text-gray-700 ovo-font dark:text-white/80">Tools I use</motion.h4>
-
-          <motion.ul 
-          initial={{opacity:0 }}
-      whileInView={{opacity:1}}
-      transition={{duration:1.5,delay:0.6}}
-          className="flex items-center gap-3 sm:gap-5">
-            {toolsData.map((tool,index)=>(
-                <motion.li 
-                whileHover={{scale:1.1}}
-                key={index} className="flex items-center justify-center w-12 sm:w-14 aspect-square border border-gray-400 rounded-lg cursor-pointer hover:-translate-y-1 hover:scale-105 transition-transform duration-300">
-                   <Image src={tool} alt="Tool" className="w-5 sm:w-7"/>
-                </motion.li>
-            ))}
-          </motion.ul>
-
+              );
+            })}
+          </ul>
         </motion.div>
-      </motion.div>
-    </motion.div>
+      </div>
+    </section>
   );
 };
 

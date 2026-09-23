@@ -1,103 +1,101 @@
-"use client"
-import React, { useEffect, useRef, useState } from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { assets } from "../../../assets/assets";
+import { Moon, Sun, Menu, X } from "lucide-react";
+import { assets, navLinks, links } from "../../../assets/assets";
 
 const Navbar = ({ isDarkMode, setIsDarkMode }) => {
+  const [isScroll, setIsScroll] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
-  const [isScroll , setIsScroll] = useState(false)
-
-  const sideMenuRef = useRef();
-
-  const openMenu = ()=>{
-    sideMenuRef.current.style.transform = 'translateX(-16rem)'
-  }
-
-  const closeMenu = ()=>{
-    sideMenuRef.current.style.transform = 'translateX(16rem)'
-  }
-
-  useEffect(()=>{
-    window.addEventListener("scroll",()=>{
-        if(scrollY > 50){
-           setIsScroll(true)
-        }else{
-           setIsScroll(false)
-        }
-    })
-  })
+  useEffect(() => {
+    const onScroll = () => setIsScroll(window.scrollY > 40);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
     <>
-    <div className=" absolute fixed pt-8  top-0 right-0 w-full -z-10 translate-y-[-80%] dark:hidden">
-        <Image src={assets.header_bg_color} alt="" className="w-full"/>
-    </div>
-      <nav className={` absolute fixed pt-8 top-0 left-0 w-full flex items-center px-4 sm:px-12 xl:px-[5%] py-4 justify-between z-50 lg:px-8 ${isScroll?"bg-white-0.5 backdrop-blur-lg shadow-sm dark:shadow-white/20":""}`}>
-        <a href="#top">
-          <Image
-            src={isDarkMode?assets.logo_dark: assets.logo}
-            alt=""
-            className="w-28 cursor-pointer mr-14"
-          />
-        </a>
-        <ul className={`hidden md:flex items-center justify-between gap-6 lg:gap-8 rounded-full px-12 py-3  ${isScroll ? "" : "bg-white shadow-sm bg-opacity-50 backdrop-blur-lg dark:bg-transparent dark:border dark:border-white/50"}`}>
-          <li>
-            <a className="ovo-font " href="#top">Home</a>
-          </li>
-          <li>
-            <a className="ovo-font" href="#about">About me</a>
-          </li>
-          <li>
-            <a className="ovo-font" href="#skills">Skills</a>
-          </li>
-          <li>
-            <a className="ovo-font" href="#project">Project</a>
-          </li>
-          <li>
-            <a className="ovo-font" href="#contact">Contact me</a>
-          </li>
-        </ul>
-        <div className="flex items-center gap-4">
-          <button onClick={() => setIsDarkMode((prev) => !prev)}>
-            <Image src={isDarkMode?assets.sun_icon: assets.moon_icon} alt="" className="w-6"/>
-          </button>
-          <a
-            href="#contact"
-            className=" ovo-font hidden lg:flex items-center px-10 py-2.5 gap-3 border border-gray-500 rounded-full ml-4 dark:border-white/50"
-          >
-            {" "}
-            Contact me <Image alt="" src={isDarkMode?assets.arrow_icon_dark: assets.arrow_icon} className="w-3" />
+      <nav
+        className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
+          isScroll
+            ? "bg-white/70 dark:bg-[#0b0713]/70 backdrop-blur-xl border-b border-zinc-200/60 dark:border-white/10 py-3"
+            : "bg-transparent py-5"
+        }`}
+      >
+        <div className="max-w-6xl mx-auto px-4 sm:px-8 flex items-center justify-between">
+          <a href="#top" aria-label="Home">
+            <Image src={isDarkMode ? assets.logo_dark : assets.logo} alt="Altamash Khan" className="w-24 sm:w-28" priority />
           </a>
-          <button onClick={openMenu} className="block md:hidden ml-3">
-            <Image src={isDarkMode? assets.menu_white: assets.menu_black} alt="" className="w-6"/>
-          </button>
+
+          <ul className="hidden md:flex items-center gap-7 text-sm font-medium text-zinc-700 dark:text-zinc-300">
+            {navLinks.map((l) => (
+              <li key={l.href}>
+                <a href={l.href} className="hover:text-violet-600 dark:hover:text-violet-400 transition-colors">
+                  {l.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+
+          <div className="flex items-center gap-2 sm:gap-3">
+            <button
+              onClick={() => setIsDarkMode((p) => !p)}
+              aria-label="Toggle theme"
+              className="w-9 h-9 rounded-full flex items-center justify-center border border-zinc-300 dark:border-white/15 hover:bg-zinc-100 dark:hover:bg-white/10 transition-colors"
+            >
+              {isDarkMode ? <Sun size={16} /> : <Moon size={16} />}
+            </button>
+            <a
+              href={links.resume}
+              download
+              className="hidden lg:inline-flex items-center px-5 py-2 rounded-full text-sm font-medium bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 hover:opacity-90 transition-opacity"
+            >
+              Resume
+            </a>
+            <button
+              onClick={() => setMenuOpen(true)}
+              aria-label="Open menu"
+              className="md:hidden w-9 h-9 rounded-full flex items-center justify-center border border-zinc-300 dark:border-white/15"
+            >
+              <Menu size={18} />
+            </button>
+          </div>
         </div>
-
-        {/*---mobile menu---*/}
-
-        <ul ref={sideMenuRef} className="flex md:hidden flex-col gap-4 py-20 px-10 fixed -right-64 top-0 bottom-0 w-64 z-50 h-screen bg-rose-50 transition duration-500 dark:bg-[#11001f]">
-             
-           <div className="absolute right-6 top-6" onClick={closeMenu}>
-            <Image src={ isDarkMode?assets.close_white: assets.close_black} alt="" className="w-5 cursor-pointer" />
-           </div>
-
-          <li>
-            <a onClick={closeMenu} className="ovo-font" href="#top">Home</a>
-          </li>
-          <li>
-            <a onClick={closeMenu} className="ovo-font" href="#about">About me</a>
-          </li>
-          <li>
-            <a onClick={closeMenu} className="ovo-font" href="#skills">Skills</a>
-          </li>
-          <li>
-            <a onClick={closeMenu} className="ovo-font" href="#project">Project</a>
-          </li>
-          <li>
-            <a onClick={closeMenu} className="ovo-font" href="#contact">Contact me</a>
-          </li>
-        </ul>
       </nav>
+
+      {/* mobile drawer */}
+      <div
+        className={`fixed inset-0 z-[60] md:hidden transition ${menuOpen ? "pointer-events-auto" : "pointer-events-none"}`}
+      >
+        <div
+          onClick={() => setMenuOpen(false)}
+          className={`absolute inset-0 bg-black/40 transition-opacity ${menuOpen ? "opacity-100" : "opacity-0"}`}
+        />
+        <div
+          className={`absolute right-0 top-0 h-full w-72 bg-white dark:bg-[#120b1f] shadow-2xl p-8 flex flex-col gap-6 transition-transform duration-300 ${
+            menuOpen ? "translate-x-0" : "translate-x-full"
+          }`}
+        >
+          <button onClick={() => setMenuOpen(false)} aria-label="Close menu" className="self-end">
+            <X size={20} />
+          </button>
+          {navLinks.map((l) => (
+            <a
+              key={l.href}
+              href={l.href}
+              onClick={() => setMenuOpen(false)}
+              className="text-lg ovo-font hover:text-violet-600 dark:hover:text-violet-400"
+            >
+              {l.label}
+            </a>
+          ))}
+          <a href={links.resume} download className="mt-auto text-center px-5 py-2.5 rounded-full text-sm font-medium bg-zinc-900 text-white dark:bg-white dark:text-zinc-900">
+            Download resume
+          </a>
+        </div>
+      </div>
     </>
   );
 };

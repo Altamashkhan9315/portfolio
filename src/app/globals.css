@@ -3,13 +3,10 @@
 @custom-variant dark (&:is(.dark, .dark *));
 
 .ovo-font {
-  font-family: 'Ovo', serif;
-} 
+  font-family: var(--font-ovo), 'Ovo', serif;
+}
 
-.dark .dark-navbar-bg {
-  background-color: rgba(255,255,255,0.07);
-  /* 7% opacity white for dark mode */
-} 
+html { scroll-behavior: smooth; }
 
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);

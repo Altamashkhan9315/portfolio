@@ -1,166 +1,182 @@
 import user_image from "./user-image.jpg";
 import work_2 from "./work-2.png";
-import code_icon from "./code-icon.png";
 import work_1 from "./work-1.png";
-import code_icon_dark from "./code-icon-dark.png";
-import edu_icon from "./edu-icon.png";
-import edu_icon_dark from "./edu-icon-dark.png";
-import project_icon from "./project-icon.png";
-import project_icon_dark from "./project-icon-dark.png";
-import vscode from "./vscode.png";
-import firebase from "./firebase.png";
-import figma from "./figma.png";
-import git from "./git.png";
-import mongodb from "./mongodb.png";
-import right_arrow_white from "./right-arrow-white.png";
 import logo from "./logo.png";
 import logo_dark from "./logo_dark.png";
-import mail_icon from "./mail_icon.png";
-import mail_icon_dark from "./mail_icon_dark.png";
 import profile_img from "./profile-img.png";
-import download_icon from "./download-icon.png";
 import hand_icon from "./hand-icon.png";
-import header_bg_color from "./header-bg-color.png";
 import moon_icon from "./moon_icon.png";
 import sun_icon from "./sun_icon.png";
-import arrow_icon from "./arrow-icon.png";
-import arrow_icon_dark from "./arrow-icon-dark.png";
 import menu_black from "./menu-black.png";
 import menu_white from "./menu-white.png";
 import close_black from "./close-black.png";
 import close_white from "./close-white.png";
-import web_icon from "./web-icon.png";
-import mobile_icon from "./mobile-icon.png";
-import ui_icon from "./ui-icon.png";
-import graphics_icon from "./graphics-icon.png";
-import right_arrow from "./right-arrow.png";
-import send_icon from "./send-icon.png";
-import right_arrow_bold from "./right-arrow-bold.png";
-import right_arrow_bold_dark from "./right-arrow-bold-dark.png";
 
 export const assets = {
   user_image,
-  code_icon,
-  code_icon_dark,
-  edu_icon,
-  edu_icon_dark,
-  project_icon,
-  project_icon_dark,
-  vscode,
-  firebase,
-  figma,
-  git,
-  mongodb,
-  right_arrow_white,
   logo,
   logo_dark,
-  mail_icon,
-  mail_icon_dark,
   profile_img,
-  download_icon,
   hand_icon,
-  header_bg_color,
   moon_icon,
   sun_icon,
-  arrow_icon,
-  arrow_icon_dark,
   menu_black,
   menu_white,
   close_black,
   close_white,
-  web_icon,
-  mobile_icon,
-  ui_icon,
-  graphics_icon,
-  right_arrow,
-  send_icon,
-  right_arrow_bold,
-  right_arrow_bold_dark,
   work_1,
   work_2,
 };
 
-export const Projects = [
+export const links = {
+  email: "altamashkhan9315@gmail.com",
+  phone: "+91 9315117694",
+  github: "https://github.com/Altamashkhan9315",
+  linkedin: "https://www.linkedin.com/in/md-altamash-khan/",
+  leetcode: "https://leetcode.com/u/altamashkhan9315/",
+  resume: "/myresume.pdf",
+};
+
+export const navLinks = [
+  { label: "Home", href: "#top" },
+  { label: "About", href: "#about" },
+  { label: "Experience", href: "#experience" },
+  { label: "Projects", href: "#projects" },
+  { label: "Skills", href: "#skills" },
+  { label: "Contact", href: "#contact" },
+];
+
+export const stats = [
+  { value: "1,400+", label: "commits shipped in 11 months" },
+  { value: "90+", label: "intent handlers behind one agent" },
+  { value: "18×51×63", label: "entity × operation × sub-op taxonomy" },
+  { value: "7", label: "OpenAI model families routed by cost" },
+];
+
+export const experience = [
   {
-    num: "01",
-    category: "Full-stack",
-    title: "Gifting Website ",
-    description:
-      "The Gifting Website is a full-stack e-commerce platform designed to offer personalized gifts, curated hampers, and a variety of other products for special occasions. Built using the MERN stack (MongoDB, Express.js, React.js, Node.js), the application features a dynamic and responsive frontend that includes category-based product filtering, search functionality, and detailed product pages to enhance user experience. The backend supports robust functionalities such as user authentication, cart management, order placement, and a secure checkout process. An integrated admin dashboard allows real-time inventory management, product updates, and order tracking. The architecture is modular and API-optimized to ensure scalability and smooth performance across devices.",
-    stack: [{ name: "ReactJs" }, { name: "MongoDB" }, { name: "NodeJs" }],
-    image: assets.work_1,
-    live: "https://gifting-site-frontend.onrender.com/",
-    github: "https://github.com/Altamashkhan9315/Gifting-site",
+    company: "Mulltiply Tech India Pvt. Ltd.",
+    role: "AI Engineer",
+    period: "Nov 2025 – Present",
+    location: "Noida, UP",
+    summary:
+      "Top contributor to a multi-bot Python/FastAPI platform that runs WhatsApp commerce for FMCG distributors and D2C brands. Own the intent classifier, product parser, cart engine, B2C bot and the evaluation harness.",
+    bullets: [
+      "Architected the LangGraph WhatsApp ordering agent: a 7-node StateGraph with 4 conditional routers over a hierarchical structured-output taxonomy of 18 entities × 51 operations × 63 sub-operations, dispatched to 90+ handlers. Primary author of the 2,300-line classifier and 4,000-line cart and product executors.",
+      "Built a catalog-constrained Product Parser that maps free-text Hinglish and photographed order slips onto each seller's live catalog. Beat OpenAI's ~990-value enum cap (one dimension had 2,611 designs) with first-fit-decreasing enum sharding: up to 24 parallel LLM batches merged into one parse.",
+      "Built the LLM evaluation and regression harness: catalog-grounded multi-turn scenario generation over a code-derived taxonomy of 120 intents, deterministic cart/intent/quantity checks before an LLM-as-Judge, and severity-ranked issue reports in PDF and Postgres.",
+      "Replaced scattered mock flags across ~70 backend clients with one HTTPX transport interception layer, isolated per scenario with ContextVars so parallel test runs never leak state.",
+      "Made concurrent chats safe with per-session turn serialisation on Redis (SET NX locks with Lua compare-and-extend, heartbeats, dead-holder takeover) plus an LLM queue-join that folds rapid follow-ups into a single reply.",
+      "Shipped a 12-node B2C shopping bot with multi-store search and cart, complaint and human-support flows, and a gpt-5.2 tool-calling agent with 6 tools capped at 4 rounds. Per-store RAG on Pinecone answers in the buyer's own language and script (Hindi, Hinglish, English).",
+      "Cut latency and LLM spend: Redis translation cache with fail-open, translate-once chunking (3 round trips → 1), asyncio.gather fan-out, cached DB prompts, cost tracking across 9 modules and routing across 7 OpenAI model families.",
+    ],
+    stack: ["Python", "FastAPI", "LangGraph", "OpenAI", "PostgreSQL", "Redis", "Elasticsearch", "Pinecone", "WhatsApp API"],
   },
   {
-    num: "02",
-    category: "Full-stack",
-    title: "Wanderlust",
-    description:
-      "Wanderlust is a full-stack travel platform built to help users discover, list, and review unique destinations from around the world. Developed using JavaScript, Node.js, Express.js, and MongoDB, the platform offers a seamless experience for travelers looking to explore offbeat locations or share their own travel experiences. It features secure user authentication, allowing individuals to create personalized accounts and manage their listings with full CRUD functionality. The backend is structured for scalability and performance, while the frontend ensures a smooth and intuitive user experience. Wanderlust is hosted on Render, making it easily accessible and deployable for real-world use.",
-    stack: [{ name: "JavaScript" }, { name: "MongoDB" }, { name: "NodeJs" }],
-    image: assets.work_2,
-    live: "https://wanderlust-0mm6.onrender.com/listings",
-    github: "https://github.com/Altamashkhan9315/wanderlust",
+    company: "SecOrigin Technologies",
+    role: "Software Developer Intern",
+    period: "Oct 2024 – Mar 2025",
+    location: "Remote",
+    summary: "Backend work on MERN applications for cybersecurity products.",
+    bullets: [
+      "Developed and optimised 15+ REST APIs with Node.js and Express.js, improving response time by 30% and implementing JWT-based authentication.",
+    ],
+    stack: ["Node.js", "Express.js", "MongoDB", "JWT"],
   },
 ];
 
-export const serviceData = [
+export const projects = [
   {
-    icon: assets.web_icon,
-    title: "Full-stack web development",
+    title: "WhatsApp Ordering Agent",
+    tagline: "Production LLM agent for B2B FMCG ordering",
+    featured: true,
     description:
-      "Web development using MERN stack — building scalable and performant web applications with clean UI and powerful backend.",
-    link: "",
+      "LangGraph agent that takes Hindi/Hinglish orders as text or order-slip photos and turns them into cart actions. Multi-intent planner runs several actions per message in dependency order; a per-seller catalog-constrained parser keeps every SKU grounded in the live catalog.",
+    highlights: [
+      "7-node StateGraph, 4 routers, 90+ handlers",
+      "Enum sharding: 24 parallel LLM batches per parse",
+      "Redis Lua locks for per-session turn serialisation",
+    ],
+    stack: ["LangGraph", "OpenAI", "FastAPI", "Redis", "Elasticsearch"],
+    accent: "violet",
   },
   {
-    icon: assets.mobile_icon,
-    title: "Data Structures & Algorithms",
+    title: "LLM Evaluation Harness",
+    tagline: "Mystery shopper that keeps the bots honest",
+    featured: true,
     description:
-      "Strong problem-solving skills using DSA in Java. Solved 200+ problems on platforms like Leetcode & GeeksforGeeks.",
-    link: "",
+      "Generates catalog-grounded multi-turn test conversations over a 120-intent taxonomy, replays them against the real bot through an HTTPX interception layer, checks cart/intent/quantity deterministically, then hands the rest to an LLM-as-Judge. Issues land severity-ranked in PDF and Postgres.",
+    highlights: [
+      "120 intents, 3 difficulty tiers",
+      "Per-scenario isolation with ContextVars",
+      "Deterministic checks before the judge",
+    ],
+    stack: ["Python", "HTTPX", "OpenAI", "PostgreSQL", "ReportLab"],
+    accent: "emerald",
   },
   {
-    icon: assets.ui_icon,
-    title: "CS Core Fundamentals",
+    title: "CLIP Image-Match Service",
+    tagline: "Match buyer photos to catalogue SKUs",
     description:
-      "Solid understanding of Operating Systems, DBMS, CN, and OOPs concepts — essential for software development and interviews.",
-    link: "",
+      "Standalone FastAPI microservice: ViT-B-32 512-dim embeddings in Elasticsearch kNN, multi-store filtering, per-SKU dedup and confidence tiers by score and margin. Postgres-backed re-sync re-indexes without re-running inference.",
+    highlights: ["Elasticsearch dense_vector kNN", "Weights cached from Cloudflare R2"],
+    stack: ["Python", "open_clip", "Elasticsearch", "PostgreSQL", "R2"],
+    accent: "sky",
   },
   {
-    icon: assets.graphics_icon,
-    title: "Git, GitHub & Deployment",
+    title: "Delhi Police Citizen-Help Bot",
+    tagline: "RAG over policy documents on WhatsApp",
     description:
-      "Hands-on experience with Git, GitHub. Skilled in deploying full-stack apps on Vercel and Render.",
-    link: "",
+      "Answers citizens' legal and procedural questions (FIR steps, reporting a crime, emergencies) from policy documents with source-linked answers, plus dedicated handling for officer-refusal scenarios.",
+    highlights: ["Pinecone + text-embedding-3-large", "Source-cited answers"],
+    stack: ["Python", "FastAPI", "Pinecone", "OpenAI", "WhatsApp API"],
+    accent: "amber",
+  },
+  {
+    title: "Gifting Website",
+    tagline: "Full-stack e-commerce for personalised gifts",
+    description:
+      "MERN storefront with category filters, search, cart, secure checkout and an admin dashboard for real-time inventory and order tracking.",
+    stack: ["React", "Node.js", "Express", "MongoDB"],
+    image: work_1,
+    live: "https://gifting-site-frontend.onrender.com/",
+    github: "https://github.com/Altamashkhan9315/Gifting-site",
+    accent: "rose",
+  },
+  {
+    title: "Wanderlust",
+    tagline: "Discover, list and review unique places",
+    description:
+      "Full-stack travel platform with authentication and full CRUD for listings and reviews, deployed on Render.",
+    stack: ["JavaScript", "Node.js", "Express", "MongoDB"],
+    image: work_2,
+    live: "https://wanderlust-0mm6.onrender.com/listings",
+    github: "https://github.com/Altamashkhan9315/wanderlust",
+    accent: "teal",
+  },
+];
+
+export const skillGroups = [
+  {
+    title: "Generative AI",
+    skills: ["OpenAI API", "LangGraph", "LangChain", "Multi-Agent Systems", "Tool Calling", "Structured Outputs", "RAG", "Embeddings", "Prompt Engineering", "Intent Classification", "CLIP"],
+  },
+  {
+    title: "LLM Evaluation",
+    skills: ["LLM-as-Judge", "Synthetic Scenario Generation", "Deterministic Validation", "Regression Testing", "HTTPX Interception", "Backend Mocking"],
+  },
+  {
+    title: "Backend & APIs",
+    skills: ["Python", "FastAPI", "asyncio", "Pydantic v2", "Node.js", "Express.js", "REST APIs", "WhatsApp Business API", "Webhooks"],
+  },
+  {
+    title: "Data, Search & Infra",
+    skills: ["PostgreSQL", "asyncpg", "Redis", "Pinecone", "Elasticsearch (kNN)", "MongoDB", "MySQL", "Docker", "Kubernetes", "Cloudflare R2", "Git"],
   },
 ];
 
 export const infoList = [
-  {
-    icon: assets.code_icon,
-    iconDark: assets.code_icon_dark,
-    title: "Languages",
-    description: "HTML, CSS, Java, JavaScript React Js, Next Js",
-  },
-  {
-    icon: assets.edu_icon,
-    iconDark: assets.edu_icon_dark,
-    title: "Education",
-    description: "B.Tech in Computer Science",
-  },
-  {
-    icon: assets.project_icon,
-    iconDark: assets.project_icon_dark,
-    title: "Projects",
-    description: "Built more than 5 projects",
-  },
-];
-
-export const toolsData = [
-  assets.vscode,
-  assets.firebase,
-  assets.mongodb,
-  assets.figma,
-  assets.git,
+  { title: "Role", description: "AI Engineer at Mulltiply, building LLM agents for WhatsApp commerce since Nov 2025." },
+  { title: "Education", description: "B.Tech in Computer Science, Jamia Hamdard (2023–2026), CGPA 8.6." },
+  { title: "Focus", description: "LangGraph orchestration, structured outputs, RAG, and evaluation that keeps agents honest." },
 ];

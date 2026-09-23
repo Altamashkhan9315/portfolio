@@ -1,89 +1,110 @@
-"use client"
-import React, { useState } from 'react'
-import Image from 'next/image'
-import { assets } from '../../../assets/assets'
-import { motion } from "motion/react"
+"use client";
+import { useState } from "react";
+import { motion } from "motion/react";
+import { Mail, Phone, Send, Github, Linkedin, Code2 } from "lucide-react";
+import { links } from "../../../assets/assets";
+import SectionHeading from "./SectionHeading";
 
-const Contact = ({isDarkMode}) => {
+const inputCls =
+  "w-full p-3.5 rounded-xl border border-zinc-300 dark:border-white/15 bg-white dark:bg-white/5 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500 transition";
 
-     const [result, setResult] = useState("");
+const Contact = () => {
+  const [result, setResult] = useState("");
+  const [sending, setSending] = useState(false);
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    setResult("Sending....");
+    setSending(true);
+    setResult("");
     const formData = new FormData(event.target);
-
     formData.append("access_key", "1818bc94-bdab-48a0-a456-65a4c14fefcc");
 
-    const response = await fetch("https://api.web3forms.com/submit", {
-      method: "POST",
-      body: formData
-    });
-
-    const data = await response.json();
-
-    if (data.success) {
-      setResult("Form Submitted Successfully");
-      event.target.reset();
-    } else {
-      console.log("Error", data);
-      setResult(data.message);
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", { method: "POST", body: formData });
+      const data = await response.json();
+      if (data.success) {
+        setResult("Thanks! I'll get back to you soon.");
+        event.target.reset();
+      } else {
+        setResult(data.message || "Something went wrong.");
+      }
+    } catch {
+      setResult("Network error, please email me directly.");
+    } finally {
+      setSending(false);
     }
   };
 
   return (
-    <motion.div 
-    initial={{opacity:0}}
-    whileInView={{opacity:1}}
-    transition={{duration:1}}
-    id="contact" className="w-full px-4 sm:px-12 py-10 scroll-mt-20  bg-no-repeat bg-center  bg-[length:90%_auto]" style={{ backgroundImage:isDarkMode?"": ` url(/footer-bg-color.png)` }}>
-      <motion.h4 
-      initial={{ y:-20,opacity:0 }}
-      whileInView={{y:0,opacity:1}}
-      transition={{duration:0.5,delay:0.3}}
-      className="text-center mb-2 text-base sm:text-lg ovo-font ">Connect with me</motion.h4>
-      <motion.h2 
-      initial={{ y:-20,opacity:0 }}
-      whileInView={{y:0,opacity:1}}
-      transition={{duration:0.5,delay:0.5}}
-      className="text-center text-3xl sm:text-5xl ovo-font font-bold mb-2">Get in touch</motion.h2>
-      <motion.p
-      initial={{opacity:0}}
-    whileInView={{opacity:1}}
-    transition={{duration:0.5,delay:0.7}}
-      className="text-center max-w-2xl mx-auto mt-3 mb-10 sm:mb-12 ovo-font text-sm sm:text-base text-gray-700 dark:text-white">
-        I'd love to hear from you! If you have any questions, comments, or feedback, please use the form below. 
-      </motion.p>
+    <section id="contact" className="max-w-6xl mx-auto px-4 sm:px-8 py-20 sm:py-28 scroll-mt-20">
+      <SectionHeading
+        eyebrow="Contact"
+        title="Let's build something"
+        description="Hiring for an AI or backend role, or want to talk LLM agents? Drop a message, I usually reply within a day."
+      />
 
-      <motion.form
-      initial={{opacity:0}}
-    whileInView={{opacity:1}}
-    transition={{duration:0.5,delay:0.9}}
-      onSubmit={onSubmit} className='max-w-2xl mx-auto'>
-        <div className='grid md:grid-cols-2 sm:grid-cols-1 gap-6 mt-10 mb-8'>
-            <motion.input 
-            initial={{ x:-50,opacity:0 }}
-      whileInView={{x:0,opacity:1}}
-      transition={{duration:0.6,delay:1.1}}
-            className='flex-1 p-3 outline-border border-[0.5px] border-gray-400 rounded-md bg-white dark:bg-[#2a004a]/30 dark:border-white/90' type="text" placeholder='Enter your name' name='name' required/>
-            <motion.input 
-            initial={{ x:50,opacity:0 }}
-      whileInView={{x:0,opacity:1}}
-      transition={{duration:0.6,delay:1.2}}
-            className='flex-1 p-3 outline-border border-[0.5px] border-gray-400 rounded-md bg-white dark:bg-[#2a004a]/30 dark:border-white/90' type="email" placeholder='Enter your email' name='email' required/>
-        </div>
-        <motion.textarea
-        initial={{ y:100,opacity:0 }}
-      whileInView={{y:0,opacity:1}}
-      transition={{duration:0.6,delay:1.3}}
-        className='w-full p-4 outline-border border-[0.5px] border-gray-400 rounded-md bg-white mb-6 dark:bg-[#2a004a]/30 dark:border-white/90' rows='6' placeholder='Enter your message' name='message' required></motion.textarea>
-        <motion.button
-        whileHover={{scale:1.05}}
-        type='submit' className='py-3 px-8 w-max flex items-center justify-between gap-2 bg-black/80 text-white rounded-full mx-auto hover:bg-black duration-500 dark:bg-transparent dark:border dark:border-white dark:text-white dark:hover:bg-[#2a004a]'>Submit now <Image src={assets.right_arrow_white} alt='' className='w-4' /> </motion.button>
-      </motion.form>
+      <div className="grid lg:grid-cols-[1fr_1.4fr] gap-10 items-start">
+        <motion.div
+          initial={{ opacity: 0, x: -16 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="space-y-4"
+        >
+          <a href={`mailto:${links.email}`} className="flex items-center gap-4 rounded-2xl border border-zinc-200 dark:border-white/10 bg-white dark:bg-[#0f0a19] p-5 hover:border-violet-400 dark:hover:border-violet-500/60 transition-colors">
+            <span className="inline-flex w-11 h-11 items-center justify-center rounded-xl bg-violet-100 dark:bg-violet-500/15 text-violet-600 dark:text-violet-300"><Mail size={18} /></span>
+            <div>
+              <div className="text-xs uppercase tracking-wider text-zinc-500">Email</div>
+              <div className="font-medium break-all">{links.email}</div>
+            </div>
+          </a>
+          <a href={`tel:${links.phone.replace(/\s/g, "")}`} className="flex items-center gap-4 rounded-2xl border border-zinc-200 dark:border-white/10 bg-white dark:bg-[#0f0a19] p-5 hover:border-violet-400 dark:hover:border-violet-500/60 transition-colors">
+            <span className="inline-flex w-11 h-11 items-center justify-center rounded-xl bg-violet-100 dark:bg-violet-500/15 text-violet-600 dark:text-violet-300"><Phone size={18} /></span>
+            <div>
+              <div className="text-xs uppercase tracking-wider text-zinc-500">Phone</div>
+              <div className="font-medium">{links.phone}</div>
+            </div>
+          </a>
+          <div className="flex gap-3 pt-2">
+            {[
+              [links.github, Github, "GitHub"],
+              [links.linkedin, Linkedin, "LinkedIn"],
+              [links.leetcode, Code2, "LeetCode"],
+            ].map(([href, Icon, label]) => (
+              <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className="flex-1 inline-flex items-center justify-center gap-2 py-3 rounded-xl border border-zinc-200 dark:border-white/10 text-sm font-medium hover:bg-zinc-100 dark:hover:bg-white/5 transition-colors">
+                <Icon size={16} /> {label}
+              </a>
+            ))}
+          </div>
+        </motion.div>
 
-    </motion.div>
-  )
-}
+        <motion.form
+          initial={{ opacity: 0, x: 16 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          onSubmit={onSubmit}
+          className="rounded-2xl border border-zinc-200 dark:border-white/10 bg-white dark:bg-[#0f0a19] p-6 sm:p-8 space-y-4"
+        >
+          <div className="grid sm:grid-cols-2 gap-4">
+            <input className={inputCls} type="text" name="name" placeholder="Your name" required />
+            <input className={inputCls} type="email" name="email" placeholder="Your email" required />
+          </div>
+          <textarea className={inputCls} rows="6" name="message" placeholder="What are you working on?" required />
+          <div className="flex items-center justify-between gap-4 flex-wrap">
+            <button
+              type="submit"
+              disabled={sending}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 text-sm font-medium hover:scale-[1.03] transition-transform disabled:opacity-60 disabled:hover:scale-100"
+            >
+              {sending ? "Sending…" : "Send message"} <Send size={15} />
+            </button>
+            {result && <p className="text-sm text-zinc-600 dark:text-zinc-400">{result}</p>}
+          </div>
+        </motion.form>
+      </div>
+    </section>
+  );
+};
 
-export default Contact
+export default Contact;
