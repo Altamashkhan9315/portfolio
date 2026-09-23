@@ -45,7 +45,7 @@ const StatTiles = () => {
       icon: GitCommitHorizontal,
       value: v.commits,
       format: (n) => `${n.toLocaleString("en-IN")}${live.commits ? "" : "+"}`,
-      label: "commits on main",
+      label: "commits on production",
       sub: "mulltiply-chatbot",
     },
     {

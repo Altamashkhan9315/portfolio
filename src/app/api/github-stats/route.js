@@ -5,6 +5,7 @@ import { careerStart, fallbackStats } from "../../../../assets/assets";
 // Optional: GITHUB_REPOS="owner/repo,owner/repo2", GITHUB_LOGIN="username", LEETCODE_USER="username"
 const REPOS = (process.env.GITHUB_REPOS || "mulltiplyinc/mulltiply-chatbot").split(",").map((s) => s.trim());
 const LOGIN = (process.env.GITHUB_LOGIN || "Altamashkhan9315").toLowerCase();
+const BRANCH = process.env.GITHUB_BRANCH || "production"; // branch the commit tile counts
 const LEETCODE_USER = process.env.LEETCODE_USER || "altamashkhan9315";
 const REVALIDATE = 3600; // seconds; new commits show up within an hour of landing on the default branch
 
@@ -26,6 +27,19 @@ const gh = (path, token) =>
 
 const isMe = (login) => login?.toLowerCase() === LOGIN;
 
+const graphql = async (query, variables, token) => {
+  const res = await fetch("https://api.github.com/graphql", {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+    body: JSON.stringify({ query, variables }),
+    next: { revalidate: REVALIDATE },
+  });
+  if (!res.ok) throw new Error(`graphql: ${res.status}`);
+  const d = await res.json();
+  if (d.errors) throw new Error(d.errors[0]?.message);
+  return d.data;
+};
+
 // commit counts for everyone on the default branch (includes merges)
 async function contributors(repo, token) {
   const res = await gh(`/repos/${repo}/contributors?per_page=100`, token);
@@ -34,6 +48,27 @@ async function contributors(repo, token) {
   const mine = list.filter((c) => isMe(c.login)).reduce((s, c) => s + (c.contributions || 0), 0);
   const total = list.reduce((s, c) => s + (c.contributions || 0), 0);
   return { mine, total };
+}
+
+// commit counts on a specific branch (includes merges); falls back to the default branch if it doesn't exist
+async function branchCommits(repo, token) {
+  const [owner, name] = repo.split("/");
+  const { user } = await graphql(`query($login:String!){ user(login:$login){ id } }`, { login: LOGIN }, token);
+  const { repository } = await graphql(
+    `query($owner:String!,$name:String!,$ref:String!,$author:ID!){
+      repository(owner:$owner,name:$name){
+        ref(qualifiedName:$ref){ target{ ... on Commit {
+          all: history{ totalCount }
+          mine: history(author:{id:$author}){ totalCount }
+        } } }
+      }
+    }`,
+    { owner, name, ref: `refs/heads/${BRANCH}`, author: user.id },
+    token
+  );
+  const t = repository?.ref?.target;
+  if (!t) return contributors(repo, token);
+  return { mine: t.mine.totalCount, total: t.all.totalCount };
 }
 
 // weekly additions/deletions per author on the default branch (excludes merges).
@@ -86,7 +121,7 @@ export async function GET() {
 
   if (token) {
     const [contrib, code] = await Promise.allSettled([
-      Promise.all(REPOS.map((r) => contributors(r, token))),
+      Promise.all(REPOS.map((r) => branchCommits(r, token))),
       Promise.all(REPOS.map((r) => codeStats(r, token))),
     ]);
 
@@ -95,6 +130,7 @@ export async function GET() {
       const total = contrib.value.reduce((s, c) => s + c.total, 0);
       out.live.commits = mine;
       out.live.sharePct = total ? Math.round((mine / total) * 100) : null;
+      out.live.branch = BRANCH;
       out.source = "github";
     } else {
       out.error = contrib.reason?.message;

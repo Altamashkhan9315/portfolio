@@ -34,7 +34,7 @@ export const links = {
   github: "https://github.com/Altamashkhan9315",
   linkedin: "https://www.linkedin.com/in/md-altamash-khan/",
   leetcode: "https://leetcode.com/u/altamashkhan9315/",
-  resume: "/myresume.pdf",
+  resume: "/api/resume", // live PDF from the resume repo; /myresume.pdf is the bundled fallback
 };
 
 export const navLinks = [
