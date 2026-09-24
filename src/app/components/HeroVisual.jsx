@@ -107,7 +107,7 @@ const HeroVisual = () => {
             <Bot size={18} />
           </span>
           <div className="leading-tight">
-            <div className="text-sm font-semibold">Mulltiply Assistant</div>
+            <div className="text-sm font-semibold">AI Assistant</div>
             <div className="text-[11px] text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" /> online · WhatsApp
             </div>

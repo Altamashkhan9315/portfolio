@@ -1,9 +1,9 @@
 "use client";
-import Image from "next/image";
 import { motion } from "motion/react";
 import { Briefcase, GraduationCap, Sparkles } from "lucide-react";
-import { assets, infoList } from "../../../assets/assets";
+import { infoList } from "../../../assets/assets";
 import SectionHeading from "./SectionHeading";
+import TechOrbit from "./TechOrbit";
 
 const icons = [Briefcase, GraduationCap, Sparkles];
 
@@ -18,10 +18,9 @@ const About = () => {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="relative w-64 sm:w-80 mx-auto"
+          className="w-full"
         >
-          <div className="absolute -inset-2 rounded-3xl bg-gradient-to-br from-violet-500/40 to-pink-400/30 blur-lg" />
-          <Image src={assets.user_image} alt="Altamash Khan" className="relative w-full rounded-3xl object-cover shadow-xl" />
+          <TechOrbit />
         </motion.div>
 
         <motion.div

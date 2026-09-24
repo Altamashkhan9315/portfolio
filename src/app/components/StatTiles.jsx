@@ -46,7 +46,7 @@ const StatTiles = () => {
       value: v.commits,
       format: (n) => `${n.toLocaleString("en-IN")}${live.commits ? "" : "+"}`,
       label: "commits on production",
-      sub: "mulltiply-chatbot",
+      sub: "github",
     },
     {
       key: "sharePct",
